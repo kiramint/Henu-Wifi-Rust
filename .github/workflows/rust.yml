@@ -19,7 +19,6 @@ jobs:
         target: 
           - x86_64-unknown-linux-musl
           - aarch64-unknown-linux-musl
-          - mipsel-unknown-linux-musl
 
     steps:
     - uses: actions/checkout@v4
@@ -27,8 +26,8 @@ jobs:
     - name: Install Rust target
       run: rustup target add ${{ matrix.target }}
 
-    - name: Install cross (for musl/mips toolchains)
-      run: cargo install cross --git https://github.com/cross-rs/cross
+    - name: Install cross
+      run: cargo install cross
 
     - name: Build (cross)
       run: cross build --release --target ${{ matrix.target }}
