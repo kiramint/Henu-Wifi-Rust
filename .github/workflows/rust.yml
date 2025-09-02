@@ -35,7 +35,7 @@ jobs:
     - name: Archive binary
       run: |
         mkdir -p artifacts/${{ matrix.target }}
-        cp target/${{ matrix.target }}/release/* artifacts/${{ matrix.target }}/
+        cp -r target/${{ matrix.target }}/release/* artifacts/${{ matrix.target }}/
 
     - uses: actions/upload-artifact@v4
       with:
