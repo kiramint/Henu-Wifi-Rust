@@ -1,0 +1,5 @@
+ping_test_ip: 119.29.29.29 # deprecated
+login_url: http://1.1.1.1
+account: your_account
+isp: yidong # yidong/dianxin/liantong
+password: your_password
