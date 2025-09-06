@@ -38,3 +38,7 @@
 ```
 cargo build --release
 ```
+
+> [!IMPORTANT]
+>
+> * OpenSSL needs to disable in `cargo.toml` on windows
