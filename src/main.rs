@@ -22,6 +22,7 @@ async fn main() {
 
     println!("Account: {} ISP: {}",param.account,param.isp);
     println!("Gecko Path: {} Gecko URL: {}",param.geckodriver_path,param.geckodriver_url);
+    println!("Firefox Binary: {}",param.moz_firefox_options_binary);
 
     let mut auto_login = auto_login::AutoLogin::new(parameters);
 

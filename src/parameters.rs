@@ -9,6 +9,7 @@ use serde_yaml;
 pub struct Parameters {
     pub geckodriver_path: String,
     pub geckodriver_url: String,
+    pub moz_firefox_options_binary: String,
     pub ping_test_ip: String,
     pub login_url: String,
     pub account: String,
@@ -27,6 +28,7 @@ impl Parameters {
             let default = Parameters{
                 geckodriver_path: "./geckodriver".to_string(),
                 geckodriver_url:"http://localhost:4444".to_string(),
+                moz_firefox_options_binary:"".to_string(),
                 ping_test_ip:"119.29.29.29".to_string(),
                 login_url:"http://1.1.1.1".to_string(),
                 account:"your_account".to_string(),

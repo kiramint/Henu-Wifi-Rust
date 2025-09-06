@@ -15,6 +15,7 @@
   ```yaml
   geckodriver_path: ./geckodriver # Empty for remote geckodriver
   geckodriver_url: http://localhost:4444 # URL to connect geckodriver
+  moz_firefox_options_binary: '' # Firefox bin path, in windows, it won't find automatically
   ping_test_ip: 119.29.29.29 # Best to use a DNS server
   login_url: http://1.1.1.1 # Will be redirect to portal page, 172.29.35.36
   account: your_account
