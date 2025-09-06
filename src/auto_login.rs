@@ -33,46 +33,54 @@ impl AutoLogin {
 
         let client = ClientBuilder::native()
             .capabilities(cap)
-            .connect("http://localhost:4444")
+            .connect(&self.param.geckodriver_url)
             .await
             .expect("failed to connect to WebDriver");
 
         let time_out = TimeoutConfiguration::new(
-            Some(Duration::from_secs(10)),
-            Some(Duration::from_secs(10)),
-            Some(Duration::from_secs(10))
+            Some(Duration::from_secs(15)),
+            Some(Duration::from_secs(15)),
+            Some(Duration::from_secs(15))
         );
         client.update_timeouts(time_out).await.expect("failed to set webdrive timeout");
 
-        client.goto(&self.param.login_url).await;
+        tokio::time::sleep(Duration::from_secs(1)).await;
 
-        println!("Page loaded, URL: {}", client.current_url().await.unwrap());
+        _ = client.goto(&self.param.login_url).await;
 
-        let user_name = client.find(Locator::Id("userName")).await.unwrap();
-        let password = client.find(Locator::Id("password")).await.unwrap();
+        println!("Page loaded, URL: {}", client.current_url().await?);
 
-        user_name.send_keys(&self.param.account).await.unwrap();
-        password.send_keys(&self.param.password).await.unwrap();
+        let user_name = client.find(Locator::Id("userName")).await?;
+        let password = client.find(Locator::Id("password")).await?;
 
-        let yidong=client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='yd']")).await.unwrap();
-        let liantong = client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='lt']")).await.unwrap();
-        let dianxin = client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='dx']")).await.unwrap();
+        println!("Send username: {}",self.param.account);
+        user_name.send_keys(&self.param.account).await?;
+        println!("Send password");
+        password.send_keys(&self.param.password).await?;
+
+        let yidong=client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='yd']")).await?;
+        let liantong = client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='lt']")).await?;
+        let dianxin = client.find(Locator::XPath("//input[@type='radio' and @name='operator' and @value='dx']")).await?;
 
         if self.param.isp == "dianxin".to_string() {
-            dianxin.click().await.unwrap();
+            dianxin.click().await?;
         } else if self.param.isp == "yidong".to_string() {
-            yidong.click().await.unwrap();
+            yidong.click().await?;
         } else if self.param.isp == "liantong".to_string() {
-            liantong.click().await.unwrap();
+            liantong.click().await?;
         }
 
-        let login_button = client.find(Locator::Id("loginBtn")).await.unwrap();
+        let login_button = client.find(Locator::Id("loginBtn")).await?;
 
-        login_button.click().await.unwrap();
+        tokio::time::sleep(Duration::from_secs(1)).await;
+
+        login_button.click().await?;
 
         tokio::time::sleep(Duration::from_secs(5)).await;
 
-        println!("Login result url: {}",client.current_url().await.unwrap());
+        println!("Login result url: {}",client.current_url().await?);
+
+        println!("Login complete");
 
         Ok(())
     }
